@@ -10,11 +10,16 @@ add_compile_options(-std=c++17)
 find_package(Threads REQUIRED)
 
 find_package(catkin REQUIRED COMPONENTS
+  message_generation
+  std_msgs
+  geometry_msgs
+  roscpp
   ct_core
   ct_models
   ct_optcon
   ct_rbd
   roscpp
+  tocabi_controller
 )
 
 ## System dependencies are found with CMake's conventions
@@ -53,11 +58,9 @@ find_package(hpipm QUIET)
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
+#add_message_files(
 #   FILES
-#   Message1.msg
-#   Message2.msg
-# )
+#)
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -74,10 +77,11 @@ find_package(hpipm QUIET)
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs  # Or other packages containing msgs
-# )
+generate_messages(
+   DEPENDENCIES
+   geometry_msgs
+   std_msgs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -124,17 +128,18 @@ catkin_package(
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
+  /usr/local/include/ct
 )
 
 ## Declare a C++ library
-# add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/my_ct_project.cpp
-# )
+#add_library(${PROJECT_NAME}
+#   src/main.cpp
+#)
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-# add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#add_dependencies(${PROJECT_NAME} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
